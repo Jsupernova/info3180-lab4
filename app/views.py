@@ -4,6 +4,7 @@ Jinja2 Documentation:    http://jinja.pocoo.org/2/documentation/
 Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 This file creates your application.
 """
+from cgi import print_directory
 from fileinput import filename
 import os
 from app import app
@@ -11,7 +12,16 @@ from flask import render_template, request, redirect, url_for, flash, session, a
 from werkzeug.utils import secure_filename
 from .forms import UploadForm
 
-
+def get_uploaded_images():
+    rootdir = os.getcwd()
+    print (rootdir)
+    filenames=[]
+    for subdir, dirs, files in os.walk(rootdir + '/app/static/uploads/'):
+        for filename in files:
+            print (os.path.join.(subdir, filename))
+            if(filename!=".getkeep"):
+                filenames.append("uploads/" + filename)
+    return filenames
 ###
 # Routing for your application.
 ###
@@ -45,6 +55,10 @@ def upload():
         return redirect(url_for('files'))
 
     return render_template('upload.html',form=UploadForm)
+
+@app.route('/files')
+def files():
+    return render_template('files.html',filename=get_uploaded_images())
 
 
 @app.route('/login', methods=['POST', 'GET'])

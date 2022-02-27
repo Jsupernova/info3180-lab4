@@ -1,0 +1,10 @@
+{% extends 'base.html' %} 
+
+{% block main %} 
+<ul class="get-container">
+    {% for file in filename %}  
+        <li><img class="images" src="{{url_for('static,filename=file')}}" alt="image"></li>
+    {% endfor %}
+
+</ul>
+{% endblock %}
