@@ -16,9 +16,9 @@ def get_uploaded_images():
     rootdir = os.getcwd()
     print (rootdir)
     filenames=[]
-    for subdir, dirs, files in os.walk(rootdir + '/app/static/uploads/'):
+    for subdir, dirs, files in os.walk(rootdir + '/uploads'):
         for filename in files:
-            print (os.path.join.(subdir, filename))
+            print (os.path.join(subdir, filename))
             if(filename!=".getkeep"):
                 filenames.append("uploads/" + filename)
     return filenames
@@ -44,20 +44,22 @@ def upload():
         abort(401)
 
     # Instantiate your form class
-
+    myForm = UploadForm()
     # Validate file upload on submit
-    if request.method == 'POST' and UploadForm.validate_on_submit():
+    if request.method == 'POST' and myForm.validate_on_submit():
         # Get file data and save to your uploads folder
-        pic=UploadForm.pic.data
+        pic=myForm.pic.data
         filename=secure_filename(pic.filename)
         pic.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
         flash('File Saved', 'success')
         return redirect(url_for('files'))
 
-    return render_template('upload.html',form=UploadForm)
+    return render_template('upload.html',form=myForm)
 
 @app.route('/files')
 def files():
+    if not session.get('logged_in'):
+        abort(401)
     return render_template('files.html',filename=get_uploaded_images())
 
 
