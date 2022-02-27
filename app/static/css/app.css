@@ -1,3 +1,13 @@
 body {
     padding-top: 5rem;
 }
+.grid-container{
+    display:grid;
+    grid-gap: 50px;
+    list-style: none;
+    grid-template-columns: repeat(3, 1fr);
+}
+.images{
+    width:280px;
+    height:230px;
+}

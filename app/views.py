@@ -16,11 +16,13 @@ def get_uploaded_images():
     rootdir = os.getcwd()
     print (rootdir)
     filenames=[]
-    for subdir, dirs, files in os.walk(rootdir + '/uploads'):
+    for subdir, dirs, files in os.walk(rootdir + '/app/static/uploads'):
         for filename in files:
             print (os.path.join(subdir, filename))
             if(filename!=".getkeep"):
                 filenames.append("uploads/" + filename)
+    print("hello")
+    print(filenames)
     return filenames
 ###
 # Routing for your application.
